@@ -17,6 +17,12 @@ env:
   BUILD_HTTPFS_SRC: ${{ github.workspace }}/build/release/_deps/httpfs_extension_fc-src
   GEN: ninja
   VCPKG_BINARY_SOURCES: 'clear;http,https://vcpkg-cache.duckdb.org,read'
+  # Haybarn vcpkg ASSET cache (source-tarball mirror). Read-only because this
+  # workflow is PR-triggered and fork PRs don't get our bearer secret — using
+  # `read` keeps it useful (cache hits avoid origin) without needing auth.
+  # Writes still happen from the trusted Tier 1 extension-distribution path,
+  # so the cache stays populated for everyone else.
+  X_VCPKG_ASSET_SOURCES: 'clear;x-azurl,https://haybarn-vcpkg-cache.rusty-bb6.workers.dev/assets/,,read'
   VCPKG_COMMIT_ID: 84bab45d415d22042bd0b9081aea57f362da3f35
   VCPKG_TARGET_TRIPLET: x64-linux # NOTE: only works cuz all linux in this file
   VCPKG_TOOLCHAIN_PATH: ${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake

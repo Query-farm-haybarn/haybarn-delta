@@ -15,6 +15,7 @@ env:
   GEN: Ninja
   VCPKG_COMMIT_ID: 84bab45d415d22042bd0b9081aea57f362da3f35
   VCPKG_TOOLCHAIN_PATH: ${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
+  X_VCPKG_ASSET_SOURCES: 'clear;x-azurl,https://haybarn-vcpkg-cache.rusty-bb6.workers.dev/assets/,,read'
 
 jobs:
   azure-tests-linux:
