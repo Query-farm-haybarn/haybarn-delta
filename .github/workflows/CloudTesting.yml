@@ -1,7 +1,7 @@
 name: Cloud functional tests
+# Haybarn: push/schedule triggers removed — this standalone test workflow doesn't gate any
+# production artifact; the core engine's haybarn-extensions.yml is the canonical builder.
 on:
-  push:
-    branches: [main, "v[12].[0-9]+-[a-zA-Z]*", "features/**"]
   repository_dispatch:
   workflow_dispatch:
 concurrency:
@@ -11,6 +11,7 @@ defaults:
   run:
     shell: bash
 env:
+  X_VCPKG_ASSET_SOURCES: 'clear;x-azurl,https://haybarn-vcpkg-cache.rusty-bb6.workers.dev/assets/,,read'
   BUILD_EXTENSION_TEST_DEPS: full
   GEN: ninja
   VCPKG_COMMIT_ID: cd61e1e26a038e82d6550a3ebbe0fbbfe7da78e3 # Release 2026.06.24

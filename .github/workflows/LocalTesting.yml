@@ -1,7 +1,7 @@
 name: Local functional tests
+# Haybarn: push/schedule triggers removed — this standalone test workflow doesn't gate any
+# production artifact; the core engine's haybarn-extensions.yml is the canonical builder.
 on:
-  push:
-    branches: [main, "v[12].[0-9]+-[a-zA-Z]*", "features/**"]
   pull_request:
   workflow_dispatch: # manual "Run workflow" for any branch (requires write access)
   repository_dispatch:
@@ -12,6 +12,7 @@ defaults:
   run:
     shell: bash
 env:
+  X_VCPKG_ASSET_SOURCES: 'clear;x-azurl,https://haybarn-vcpkg-cache.rusty-bb6.workers.dev/assets/,,read'
   BASE_BRANCH: ${{ github.base_ref || (startsWith(github.ref, 'refs/heads/features/') && 'feature' || 'main') }}
   BUILD_EXTENSION_TEST_DEPS: full # NOTE: force checkout/build of httpfs in all builds
   GEN: ninja
